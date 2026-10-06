@@ -21,6 +21,7 @@ try {
         'TensorMUB',
         'TensorMUB6',
         'Reduction',
+        'OverlapConstraint',
         'LowerBound',
         'LowerBound6',
         'SixRootPairing',

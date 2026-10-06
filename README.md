@@ -22,6 +22,11 @@ with `IsUnbiased U V` defined by exact equality of every squared overlap to `1 /
   to the identity and pairwise unbiased to each other, exposing the six transition constraints;
 * assuming three bases exist, proving that no four-base family exists is equivalent to proving that the maximum is three.
 
+[`OverlapConstraint.lean`](OverlapConstraint.lean) formalizes the exact dependence among the
+six squared-overlap equations in any fixed column of a relative unitary: their sum is one, so
+any five equations equal to `1/6` force the sixth. This is a constraint-counting identity, not
+a nonexistence result.
+
 These are reductions, not the missing nonexistence theorem. The central unresolved task is still
 `¬ HasMUBs 6 4`.
 
@@ -94,7 +99,7 @@ The brief proposes using the order-six complex Hadamard classification as a star
 
 There is also a constraint-counting correction to the brief's generic MU-vector heuristic. For a phase vector and a fixed Hadamard matrix, the six squared-overlap equations have a sum fixed by unitarity and the vector norm, so at most five are independent. Counting them as six independent equations in five phases does not establish generic nonexistence; any such claim needs a transversality argument or an explicit certified analysis.
 
-The authors' older whole-Fourier-family exclusion was independently rerun from their public C++ source on the i9-275HX. The 82,630-row orthogonality database reproduced exactly (SHA-256 `F304A87CD2FE65B87A130A9FF49EDDC0980AD28A852B98099AF68AF876DB3877`); all 270 parameter-cell outputs matched the authors' published `fab_ubv.txt` line-for-line. The expensive final parameter cell was divided over disjoint row-index ranges, whose counts sum to the authors' totals for that cell (11,857,999 candidate third bases and 650,745 cases requiring a fourth-basis check). The runner, generated database, and per-cell logs are not included in this repository, so this computational reproduction cannot be replayed from this checkout alone.
+The authors' older whole-Fourier-family exclusion was independently rerun from their public C++ source on the i9-275HX. The 82,630-row orthogonality database reproduced exactly (SHA-256 `F304A87CD2FE65B87A130A9FF49EDDC0980AD28A852B98099AF68AF876DB3877`). Of the 270 stored parameter-cell outputs, 269 match the corresponding sections of the authors' published `fab_ubv.txt` line-for-line. The remaining stored cell is stale and incomplete; however, its complete set of disjoint row-index chunk outputs was separately checked to reconstruct the published cell exactly, including its 182 candidate rows and the aggregate counts (11,857,999 candidate third bases and 650,745 cases requiring a fourth-basis check). The runner, generated database, chunk outputs, and logs are outside this repository, so this computational reproduction cannot be replayed from this checkout alone.
 
 This is a reproduction of a published *partial* exclusion, not a new proof of the full OQP 13 result and not a Lean-verified numerical certificate. The source uses double-precision arithmetic with an epsilon margin. Its mathematical scope is only quartets containing a transition matrix in the two-parameter Fourier family. The unresolved extension is to show that every possible MUB triplet has such a transition, or otherwise exclude compatible quartets across the remaining Hadamard classes.
 
