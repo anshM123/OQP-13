@@ -63,7 +63,7 @@ private lemma cubic_poly_eq_of_coeffs (a b c d e f : ℂ)
   rw [hpoly a b c, hpoly (-d) (-e) (-f)]
   rw [hsum, he2, hprod]
 
-private def triple (a b c : ℂ) (i : Fin 3) : ℂ :=
+def triple (a b c : ℂ) (i : Fin 3) : ℂ :=
   if i.val = 0 then a else if i.val = 1 then b else c
 
 private lemma triple_sum (a b c : ℂ) :

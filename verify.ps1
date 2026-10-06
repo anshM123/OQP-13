@@ -24,9 +24,12 @@ try {
         'LowerBound',
         'LowerBound6',
         'SixRootPairing',
+        'HadamardRootBridge',
         'Proposition46',
         'Corollary47Audit',
         'Corollary47FixedI',
+        'Corollary47ArbitraryI',
+        'AggregateProductGap',
         'Lemma44Scratch',
         'AxiomAudit'
     )

@@ -38,6 +38,12 @@ such a permutation without a unit-modulus assumption. The permutation is not sho
 involution, and the lemma does not derive the power-sum hypotheses from MUB-triplet constraints or
 classify MUB triplets.
 
+[`HadamardRootBridge.lean`](HadamardRootBridge.lean) makes the connection to the paper's
+Hadamard-matrix notation for the fixed row partition explicit: under entrywise unit modulus, the
+two conditions `G_H(μ(I)) = 0` and `G_H(3μ(I)) = 0` imply the first and third quotient-root power
+sums vanish, and hence give an opposite pairing. This is conditional on those two identities; the
+module does not prove them for every MUB triplet.
+
 [`Proposition46.lean`](Proposition46.lean) formalizes the six-value algebraic step in Proposition
 4.6 of the cited triplet paper: for six unit-modulus values whose sum is zero and whose alternating
 triple-product sum is zero, it constructs a bijection pairing each even-indexed value with an
@@ -58,9 +64,14 @@ identities feed into Proposition 4.6 and yield the claimed pairing. This is the 
 orthogonal columns of a complex Hadamard matrix; it does not establish the broader hypotheses of
 Conjecture 2 from all MUB-cube axioms.
 
-[`AxiomAudit.lean`](AxiomAudit.lean) checks the key results with `#print axioms`. The reduction,
-lower-bound, and six-root theorems depend only on `propext`, `Classical.choice`, and `Quot.sound`;
-none reports `sorryAx`.
+[`Corollary47ArbitraryI.lean`](Corollary47ArbitraryI.lean) proves the same corrected pairing for
+any three-element subset `I ⊂ Fin 6`, using products and sums over the coordinate subtypes of `I`
+and its complement. It returns an explicit equivalence pairing each ratio with its negative.
+Its zero-sum and opposite μ-product hypotheses are stated explicitly; this remains a conditional
+lemma, not a proof that every OQP 13 triplet satisfies them.
+
+[`AxiomAudit.lean`](AxiomAudit.lean) checks the key results with `#print axioms`. Every audited
+theorem depends only on `propext`, `Classical.choice`, and `Quot.sound`; none reports `sorryAx`.
 
 ## Verification
 
@@ -75,7 +86,7 @@ The script checks that the adjacent `formal-conjectures` checkout is at the pinn
 builds the official OQP 13 module, compiles the project Lean modules in dependency order, and
 prints the axiom report. Generated `.olean` files are ignored by Git.
 
-The official OQP 13 source is [13.lean](https://github.com/google-deepmind/formal-conjectures/blob/main/FormalConjectures/OpenQuantumProblems/13.lean); the IQOQI source problem is [Mutually unbiased bases](https://oqp.iqoqi.oeaw.ac.at/mutually-unbiased-bases).
+The official OQP 13 source at the checked commit is [13.lean](https://github.com/google-deepmind/formal-conjectures/blob/df3f12d7bd06feb3f71ae37abae0ca7cb798d9b1/FormalConjectures/OpenQuantumProblems/13.lean); the IQOQI source problem is [Mutually unbiased bases](https://oqp.iqoqi.oeaw.ac.at/mutually-unbiased-bases).
 
 ## Research lead from the attached brief
 
@@ -83,10 +94,10 @@ The brief proposes using the order-six complex Hadamard classification as a star
 
 There is also a constraint-counting correction to the brief's generic MU-vector heuristic. For a phase vector and a fixed Hadamard matrix, the six squared-overlap equations have a sum fixed by unitarity and the vector norm, so at most five are independent. Counting them as six independent equations in five phases does not establish generic nonexistence; any such claim needs a transversality argument or an explicit certified analysis.
 
-The authors' older whole-Fourier-family exclusion was independently rerun from their public C++ source on the i9-275HX. The 82,630-row orthogonality database reproduced exactly (SHA-256 `F304A87CD2FE65B87A130A9FF49EDDC0980AD28A852B98099AF68AF876DB3877`); all 270 parameter-cell outputs matched the authors' published `fab_ubv.txt` line-for-line. The expensive final parameter cell was divided over disjoint row-index ranges, whose counts sum to the authors' totals for that cell (11,857,999 candidate third bases and 650,745 cases requiring a fourth-basis check).
+The authors' older whole-Fourier-family exclusion was independently rerun from their public C++ source on the i9-275HX. The 82,630-row orthogonality database reproduced exactly (SHA-256 `F304A87CD2FE65B87A130A9FF49EDDC0980AD28A852B98099AF68AF876DB3877`); all 270 parameter-cell outputs matched the authors' published `fab_ubv.txt` line-for-line. The expensive final parameter cell was divided over disjoint row-index ranges, whose counts sum to the authors' totals for that cell (11,857,999 candidate third bases and 650,745 cases requiring a fourth-basis check). The runner, generated database, and per-cell logs are not included in this repository, so this computational reproduction cannot be replayed from this checkout alone.
 
 This is a reproduction of a published *partial* exclusion, not a new proof of the full OQP 13 result and not a Lean-verified numerical certificate. The source uses double-precision arithmetic with an epsilon margin. Its mathematical scope is only quartets containing a transition matrix in the two-parameter Fourier family. The unresolved extension is to show that every possible MUB triplet has such a transition, or otherwise exclude compatible quartets across the remaining Hadamard classes.
 
-An adversarial read of Matolcsi et al.'s triplet route found an apparent gap in the compression from Conjecture 2 to Eq. (4.9): Conjecture 2 asks for zero products at each matching permutation, while Eq. (4.9) multiplies two independent permutation sums and includes cross-permutation terms. Nonnegativity justifies the analogous sum for the first condition, but does not alone justify this second compression. No support-alignment lemma is stated around Eqs. (4.8)–(4.9). This is not a counterexample among actual MUB triplets; it means the displayed equivalence needs an additional structural argument or a corrected aggregate identity.
+An adversarial read of Matolcsi et al.'s triplet route found an apparent gap in the compression from Conjecture 2 to Eq. (4.9): Conjecture 2 asks for zero products at each matching permutation, while Eq. (4.9) multiplies two independent permutation sums and includes cross-permutation terms. Nonnegativity justifies the analogous sum for the first condition, but does not alone justify this second compression. [`AggregateProductGap.lean`](AggregateProductGap.lean) machine-checks the generic algebraic counterexample to that inference. This is not a counterexample among actual MUB triplets; additional Hadamard-cube structure might still imply the stronger identity, or the aggregate could be corrected to preserve matched permutation products.
 
 Sources: Cárdenes Wuttig and Tindall, [A Complete Classification of Complex Hadamard Matrices of Order Six](https://arxiv.org/abs/2608.18053); Matolcsi, Matszangosz, Varga, and Weiner, [Triplets of Mutually Unbiased Bases](https://arxiv.org/abs/2503.14752), §4; Jaming, Matolcsi, Móra, Szöllősi, and Weiner, [A generalized Pauli problem and an infinite family of MUB-triplets in dimension 6](https://arxiv.org/abs/0902.0882), with code/data linked from the authors' [documentation page](http://www.math.bme.hu/~matolcsi/docu.htm).
