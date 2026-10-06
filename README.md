@@ -46,10 +46,11 @@ order-three Fourier block overlap equations reduce exactly to a block-energy equ
 directed cyclic cross-term equation. This is a verified local reduction used in the analytic
 Fourier-family route; it does not establish the full MU-vector classification or exclude a
 quartet by itself. [`JamingFourierFamilyReduction.lean`](JamingFourierFamilyReduction.lean)
-applies that lemma to the six grouped equations for a candidate vector unbiased to the standard
-basis and a Fourier-family basis, obtaining the two block-energy and two cyclic identities of
-the paper's equations (11)-(14). Its algebraic equivalence does not assume unit phases; those
-are still required to interpret the variables as an MU vector.
+applies that lemma to the scalar six-equation system in the paper, obtaining the two block-energy
+and two cyclic identities of equations (11)-(14). The equivalence itself needs no unit-phase
+hypotheses. The Lean module does not yet formalize the bridge from the official `IsUnbiased`
+predicate and a bundled Fourier-family matrix to those scalar equations; unit phases and that
+bridge are required to apply it to an actual MU vector.
 [`SixRootPairing.lean`](SixRootPairing.lean) formalizes a related six-value Newton-identity
 lemma: for six unit-modulus values, vanishing first and third power sums yields a permutation of
 the six indices that sends each value to its negative, preserving multiplicities; that permutation

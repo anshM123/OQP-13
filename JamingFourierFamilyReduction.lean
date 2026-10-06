@@ -4,7 +4,9 @@ import JamingLemma21
 and the two-parameter Fourier family, following Jaming et al., equations (5)-(14).
 
 The statement is algebraic in the five phase coordinates and Fourier parameters `x`, `y`;
-unit-modulus hypotheses are not needed for this six-equations-to-four-identities step. -/
+unit-modulus hypotheses are not needed for this six-equations-to-four-identities step. This
+module formalizes the scalar reduction, not the bridge from the official `IsUnbiased` predicate
+to these equations. -/
 
 namespace QutritMUB.JamingFourierFamilyReduction
 
