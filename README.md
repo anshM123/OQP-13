@@ -27,6 +27,12 @@ six squared-overlap equations in any fixed column of a relative unitary: their s
 any five equations equal to `1/6` force the sixth. This is a constraint-counting identity, not
 a nonexistence result.
 
+[`HadamardBridge.lean`](HadamardBridge.lean) connects the official unitary-basis definition to
+the convention used in the classification literature. It proves that `HasMUBs 6 4` is equivalent
+to three unitaries whose six transition matrices, scaled by `√6`, are complex Hadamard matrices
+(unit-modulus entries and orthogonal columns). This is an exact change of representation; it does
+not classify which six transitions can coexist.
+
 These are reductions, not the missing nonexistence theorem. The central unresolved task is still
 `¬ HasMUBs 6 4`.
 
@@ -95,7 +101,7 @@ The official OQP 13 source at the checked commit is [13.lean](https://github.com
 
 ## Research lead from the attached brief
 
-The brief proposes using the order-six complex Hadamard classification as a starting point. The cited August 2026 preprint does claim a complete classification and links a Lean 4 formalization, but that classification alone does not rule out four MUBs. No interval exclusion, exhaustive search certificate, or proof for the remaining special families is included here. Numerical optimizer minima are not proofs of nonexistence and are not presented as such.
+The brief proposes using the order-six complex Hadamard classification as a starting point. The cited August 2026 preprint claims a complete finite-corner classification, and its authors link a Lean formalization of that classification. The separate four-phase product-regular description is a multibranch reconstruction and has two exceptional equivalence classes; it is not one global four-parameter chart. The Lean development does not formalize that separate product-regular geometry or its global coverage. Randomly sampling the parameterization can check implementation examples, but cannot verify classification completeness. Most importantly, a classification of individual Hadamard matrices does not classify compatible MUB triples or rule out the two additional bases. No interval exclusion or Lean-checked certificate for those compatibility constraints is included here. Numerical optimizer minima are not proofs of nonexistence and are not presented as such.
 
 There is also a constraint-counting correction to the brief's generic MU-vector heuristic. For a phase vector and a fixed Hadamard matrix, the six squared-overlap equations have a sum fixed by unitarity and the vector norm, so at most five are independent. Counting them as six independent equations in five phases does not establish generic nonexistence; any such claim needs a transversality argument or an explicit certified analysis.
 

@@ -22,6 +22,7 @@ try {
         'TensorMUB6',
         'Reduction',
         'OverlapConstraint',
+        'HadamardBridge',
         'LowerBound',
         'LowerBound6',
         'SixRootPairing',
