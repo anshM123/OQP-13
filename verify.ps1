@@ -3,6 +3,7 @@ $ErrorActionPreference = 'Stop'
 $repoDir = $PSScriptRoot
 $officialDir = (Resolve-Path (Join-Path $repoDir '..\formal-conjectures')).Path
 $expectedCommit = 'df3f12d7bd06feb3f71ae37abae0ca7cb798d9b1'
+$expectedProblemHash = 'D9A1A0D62ABCD66A5A501069155BC4889444F9ECA37D5C1A56AF3062F77F56AD'
 
 Push-Location $officialDir
 try {
@@ -12,12 +13,20 @@ try {
         throw "Expected formal-conjectures $expectedCommit, found $actualCommit."
     }
 
+    $problemFile = Join-Path $officialDir 'FormalConjectures\OpenQuantumProblems\13.lean'
+    $actualProblemHash = (Get-FileHash $problemFile -Algorithm SHA256).Hash
+    if ($actualProblemHash -ne $expectedProblemHash) {
+        throw "Official OQP 13 source hash mismatch: expected $expectedProblemHash, found $actualProblemHash."
+    }
+
     & lake build 'FormalConjectures.OpenQuantumProblems.«13»'
     if ($LASTEXITCODE -ne 0) { throw 'The official OQP 13 module did not build.' }
 
     $env:LEAN_PATH = "$repoDir;$env:LEAN_PATH"
     $modules = @(
         'QutritMUB',
+        'JamingLemma21',
+        'JamingFourierFamilyReduction',
         'TensorMUB',
         'TensorMUB6',
         'Reduction',

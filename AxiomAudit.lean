@@ -10,6 +10,7 @@ import Corollary47Audit
 import Corollary47FixedI
 import Corollary47ArbitraryI
 import AggregateProductGap
+import JamingFourierFamilyReduction
 
 /-!
 # OQP 13 axiom audit
@@ -35,3 +36,5 @@ six-root pairing criterion so that unexpected assumptions are visible.
 #print axioms OQP13Corollary47FixedI.fixed_even_odd_pairing
 #print axioms OQP13Corollary47ArbitraryI.arbitrary_three_pairing
 #print axioms OQP13AggregateProductGap.generic_inference_is_false
+#print axioms QutritMUB.JamingLemma21.jaming_lemma_2_1
+#print axioms QutritMUB.JamingFourierFamilyReduction.six_fourier_equations_iff_block_conditions

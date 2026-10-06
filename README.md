@@ -41,6 +41,15 @@ the official qubit Z/X/Y bases with the qutrit computational/Fourier/chirp bases
 `OQP13LowerBound6.hasMUBs_6_3 : HasMUBs 6 3`. [`QutritMUB.lean`](QutritMUB.lean) proves the
 qutrit Gram and cross-overlap identities; [`TensorMUB6.lean`](TensorMUB6.lean) proves tensor
 unitarity and unbiasedness survive the `Fin 2 × Fin 3 ≃ Fin 6` reindexing.
+[`JamingLemma21.lean`](JamingLemma21.lean) formally proves Jaming et al.'s Lemma 2.1: three
+order-three Fourier block overlap equations reduce exactly to a block-energy equation and a
+directed cyclic cross-term equation. This is a verified local reduction used in the analytic
+Fourier-family route; it does not establish the full MU-vector classification or exclude a
+quartet by itself. [`JamingFourierFamilyReduction.lean`](JamingFourierFamilyReduction.lean)
+applies that lemma to the six grouped equations for a candidate vector unbiased to the standard
+basis and a Fourier-family basis, obtaining the two block-energy and two cyclic identities of
+the paper's equations (11)-(14). Its algebraic equivalence does not assume unit phases; those
+are still required to interpret the variables as an MU vector.
 [`SixRootPairing.lean`](SixRootPairing.lean) formalizes a related six-value Newton-identity
 lemma: for six unit-modulus values, vanishing first and third power sums yields a permutation of
 the six indices that sends each value to its negative, preserving multiplicities; that permutation
@@ -93,9 +102,10 @@ cd <this repository>
 .\verify.ps1
 ```
 
-The script checks that the adjacent `formal-conjectures` checkout is at the pinned commit,
-builds the official OQP 13 module, compiles the project Lean modules in dependency order, and
-prints the axiom report. Generated `.olean` files are ignored by Git.
+The script checks that the adjacent `formal-conjectures` checkout is at the pinned commit and
+that its `13.lean` has the pinned SHA-256, builds the official OQP 13 module, compiles the project
+Lean modules in dependency order, and prints the axiom report. Generated `.olean` files are
+ignored by Git.
 
 The official OQP 13 source at the checked commit is [13.lean](https://github.com/google-deepmind/formal-conjectures/blob/df3f12d7bd06feb3f71ae37abae0ca7cb798d9b1/FormalConjectures/OpenQuantumProblems/13.lean); the IQOQI source problem is [Mutually unbiased bases](https://oqp.iqoqi.oeaw.ac.at/mutually-unbiased-bases).
 
