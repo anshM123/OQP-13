@@ -42,6 +42,28 @@ theorem four_iff_normalized :
   · rintro ⟨B, _, hB⟩
     exact ⟨B, hB⟩
 
+/-- A normalized quartet is equivalently three unitaries, each unbiased to the identity,
+and pairwise unbiased to one another. This makes the six transition constraints explicit. -/
+theorem four_iff_transition_triple :
+    HasMUBs 6 4 ↔
+      ∃ H K L : UMat 6,
+        IsUnbiased 1 H ∧ IsUnbiased 1 K ∧ IsUnbiased 1 L ∧
+        IsUnbiased H K ∧ IsUnbiased H L ∧ IsUnbiased K L := by
+  rw [four_iff_normalized]
+  constructor
+  · rintro ⟨B, h0, hB⟩
+    refine ⟨B 1, B 2, B 3, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    · simpa [h0] using hB (by decide : (0 : Fin 4) ≠ 1)
+    · simpa [h0] using hB (by decide : (0 : Fin 4) ≠ 2)
+    · simpa [h0] using hB (by decide : (0 : Fin 4) ≠ 3)
+    · exact hB (by decide : (1 : Fin 4) ≠ 2)
+    · exact hB (by decide : (1 : Fin 4) ≠ 3)
+    · exact hB (by decide : (2 : Fin 4) ≠ 3)
+  · rintro ⟨H, K, L, hH, hK, hL, hHK, hHL, hKL⟩
+    refine ⟨![1, H, K, L], by simp, ?_⟩
+    intro i j hij
+    fin_cases i <;> fin_cases j <;> simp_all [IsUnbiased.symm]
+
 theorem max_three_iff_no_four (h3 : HasMUBs 6 3) :
     IsMaxMUBCount 6 3 ↔ ¬ HasMUBs 6 4 := by
   constructor
@@ -65,4 +87,5 @@ theorem max_three_iff_no_four (h3 : HasMUBs 6 3) :
 end OQP13
 
 #print axioms OQP13.four_iff_normalized
+#print axioms OQP13.four_iff_transition_triple
 #print axioms OQP13.max_three_iff_no_four
